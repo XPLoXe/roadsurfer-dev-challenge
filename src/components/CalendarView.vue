@@ -53,18 +53,12 @@ const fetchBookingsForStation = async (stationId) => {
       {
         dot: "blue",
         dates: startDates,
-        popover: {
-          label: "start dates",
-          visibility: "click",
-        },
+        popover: true,
       }, // Attribute for start dates
       {
         dot: "red",
         dates: endDates,
-        popover: {
-          label: "end dates",
-          visibility: "click",
-        },
+        popover: true,
       }, // Attribute for end dates
     ];
   } catch (error) {
