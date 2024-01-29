@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h2>Bookings for {{ formatDate(props.selectedDate) }}:</h2>
     <div v-if="filteredBookings.length > 0">
       <ul>
         <li v-for="booking in filteredBookings" :key="booking.id">
-          {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
-          {{ formatDate(booking.endDate) }}
+          <RouterLink :to="`/booking/${booking.id}`">
+            {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
+            {{ formatDate(booking.endDate) }}
+          </RouterLink>
         </li>
       </ul>
     </div>

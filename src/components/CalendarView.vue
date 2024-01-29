@@ -9,17 +9,18 @@
         :attributes="attr"
         v-model="selectedDate"
         @dayclick="handleDateSelect"
-      />
+      >
+        <template #day-popover="{ day }">
+          <div class="text-xs font-bold text-gray-900">
+            <p>Bookings: {{ getBookingsForDay(day.date).length }}</p>
+            <BookingList
+              :filteredBookings="filteredBookings"
+              :selectedDate="selectedDate"
+            />
+          </div>
+        </template>
+      </VCalendar>
     </div>
-    <!-- BookingList component -->
-    <div>
-      <BookingList
-        :filteredBookings="filteredBookings"
-        :selectedDate="selectedDate"
-      />
-    </div>
-
-    <RouterLink to="/booking/1">Booking 1</RouterLink>
   </div>
 </template>
 
@@ -46,12 +47,21 @@ const fetchBookingsForStation = async (stationId) => {
     const endDates = bookings.value.map((booking) => new Date(booking.endDate));
 
     attr.value = [
-      { dot: "blue", dates: startDates }, // Attribute for start dates
-      { dot: "red", dates: endDates }, // Attribute for end dates
+      { dot: "blue", dates: startDates, popover: true }, // Attribute for start dates
+      { dot: "red", dates: endDates, popover: true }, // Attribute for end dates
     ];
   } catch (error) {
     console.error("Error fetching bookings:", error);
   }
+};
+
+const getBookingsForDay = (date) => {
+  const dateString = date.toDateString();
+  return bookings.value.filter((booking) => {
+    const startDate = new Date(booking.startDate).toDateString();
+    const endDate = new Date(booking.endDate).toDateString();
+    return startDate === dateString || endDate === dateString;
+  });
 };
 
 const filteredBookings = computed(() => {
@@ -72,6 +82,7 @@ const selectedDate = ref(new Date());
 const attr = ref([
   {
     dates: new Date(),
+    popover: true,
   },
 ]);
 

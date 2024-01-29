@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Bookings</h1>
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />
