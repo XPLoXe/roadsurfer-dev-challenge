@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-slate-300">
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />
@@ -14,4 +14,17 @@ import BookingDetail from "./components/BookingDetail.vue";
 import CalendarView from "./components/CalendarView.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 0.5s linear;
+}
+
+.fade-leave-to {
+  transition: all 0.5 linear;
+  opacity: 0;
+}
+</style>
