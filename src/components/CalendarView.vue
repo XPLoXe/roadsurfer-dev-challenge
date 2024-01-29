@@ -38,6 +38,17 @@ const fetchBookingsForStation = async (stationId) => {
       `https://605c94c36d85de00170da8b4.mockapi.io/stations/${stationId}`
     );
     bookings.value = response.data.bookings;
+
+    // Create calendar attributes for start and end dates
+    const startDates = bookings.value.map(
+      (booking) => new Date(booking.startDate)
+    );
+    const endDates = bookings.value.map((booking) => new Date(booking.endDate));
+
+    attr.value = [
+      { dot: "blue", dates: startDates }, // Attribute for start dates
+      { dot: "red", dates: endDates }, // Attribute for end dates
+    ];
   } catch (error) {
     console.error("Error fetching bookings:", error);
   }
