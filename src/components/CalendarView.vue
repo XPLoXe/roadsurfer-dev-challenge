@@ -3,7 +3,7 @@
     <div class="items-center px-6 py-2 bg-cyan-200 rounded-xl">
       <h2 class="text-xl font-bold">Calendar</h2>
     </div>
-    <div>
+    <div class="shadow-2xl">
       <VCalendar
         :initial-page="{ month: 3, year: 2021 }"
         :attributes="attr"
