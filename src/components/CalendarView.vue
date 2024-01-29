@@ -4,12 +4,71 @@
       <h2 class="text-xl font-bold">Calendar</h2>
     </div>
     <div>
-      <VCalendar />
+      <VCalendar
+        :initial-page="{ month: 3, year: 2021 }"
+        :attributes="attr"
+        v-model="selectedDate"
+        @dayclick="handleDateSelect"
+      />
     </div>
+    <!-- BookingList component -->
+    <div>
+      <BookingList
+        :filteredBookings="filteredBookings"
+        :selectedDate="selectedDate"
+      />
+    </div>
+
     <RouterLink to="/booking/1">Booking 1</RouterLink>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import axios from "axios";
+import BookingList from "./BookingList.vue";
+
+//State for storing booking data
+const bookings = ref([]);
+
+// Function to fetch bookings for a specific station
+const fetchBookingsForStation = async (stationId) => {
+  try {
+    const response = await axios.get(
+      `https://605c94c36d85de00170da8b4.mockapi.io/stations/${stationId}`
+    );
+    bookings.value = response.data.bookings;
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+  }
+};
+
+const filteredBookings = computed(() => {
+  return bookings.value.filter((booking) => {
+    const startDate = new Date(booking.startDate).toDateString();
+    const endDate = new Date(booking.endDate).toDateString();
+    const selectedDateString = new Date(selectedDate.value).toDateString();
+    return startDate === selectedDateString || endDate === selectedDateString;
+  });
+});
+
+// Example: Fetch bookings for station with ID 1 on component mount
+onMounted(() => {
+  fetchBookingsForStation(1);
+});
+
+const selectedDate = ref(new Date());
+const attr = ref([
+  {
+    dates: new Date(),
+  },
+]);
+
+// Function to handle date selection
+const handleDateSelect = (day) => {
+  selectedDate.value = day.date;
+  // Fetch and display booking information for the selected date here
+};
+</script>
 
 <style lang="scss" scoped></style>
