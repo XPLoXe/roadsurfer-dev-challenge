@@ -1,28 +1,34 @@
 <template>
-  <div>
-    <h2>Bookings for {{ formatDate(props.selectedDate) }}:</h2>
-    <div v-if="filteredBookings.length > 0">
-      <ul>
-        <li v-for="booking in filteredBookings" :key="booking.id">
+  <div class="p-6">
+    <ul class="flex flex-col space-y-3">
+      <li
+        v-for="booking in filteredBookings"
+        :key="booking.id"
+        class="hover:text-blue-800 hover:underline"
+      >
+        <RouterLink :to="getBookingDetailLink(booking)">
           {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
           {{ formatDate(booking.endDate) }}
-        </li>
-      </ul>
-    </div>
-    <div v-else>No bookings for this date</div>
+        </RouterLink>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
   filteredBookings: Array,
-  selectedDate: Date,
 });
 
 const formatDate = (selectedDate) => {
   const date = new Date(selectedDate);
   return date.toLocaleDateString(); // Adjust the format as needed
+};
+
+const getBookingDetailLink = (booking) => {
+  const bookingParam = encodeURIComponent(JSON.stringify(booking));
+  return `/booking/${booking.id}?data=${bookingParam}`;
 };
 </script>

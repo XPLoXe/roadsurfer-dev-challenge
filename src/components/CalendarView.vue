@@ -1,25 +1,29 @@
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen space-y-6">
     <div class="items-center px-6 py-2 bg-cyan-200 rounded-xl">
-      <h2 class="text-xl font-bold">Calendar</h2>
+      <Autocomplete @station-selected="onStationSelected" />
     </div>
-    <div>
+    <div class="shadow-2xl">
       <VCalendar
         :initial-page="{ month: 3, year: 2021 }"
         :attributes="attr"
         v-model="selectedDate"
         @dayclick="handleDateSelect"
-      />
+      >
+        <template #day-popover="{ day }">
+          <div
+            class="text-xs font-bold text-gray-900"
+            v-if="day.date === selectedDate"
+          >
+            <p>Bookings: {{ getBookingsForDay(day.date).length }}</p>
+            <BookingList
+              :filteredBookings="filteredBookings"
+              :selectedDate="selectedDate"
+            />
+          </div>
+        </template>
+      </VCalendar>
     </div>
-    <!-- BookingList component -->
-    <div>
-      <BookingList
-        :filteredBookings="filteredBookings"
-        :selectedDate="selectedDate"
-      />
-    </div>
-
-    <RouterLink to="/booking/1">Booking 1</RouterLink>
   </div>
 </template>
 
@@ -27,6 +31,7 @@
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import BookingList from "./BookingList.vue";
+import Autocomplete from "./Autocomplete.vue";
 
 //State for storing booking data
 const bookings = ref([]);
@@ -46,12 +51,29 @@ const fetchBookingsForStation = async (stationId) => {
     const endDates = bookings.value.map((booking) => new Date(booking.endDate));
 
     attr.value = [
-      { dot: "blue", dates: startDates }, // Attribute for start dates
-      { dot: "red", dates: endDates }, // Attribute for end dates
+      {
+        dot: "blue",
+        dates: startDates,
+        popover: true,
+      }, // Attribute for start dates
+      {
+        dot: "red",
+        dates: endDates,
+        popover: true,
+      }, // Attribute for end dates
     ];
   } catch (error) {
     console.error("Error fetching bookings:", error);
   }
+};
+
+const getBookingsForDay = (date) => {
+  const dateString = date.toDateString();
+  return bookings.value.filter((booking) => {
+    const startDate = new Date(booking.startDate).toDateString();
+    const endDate = new Date(booking.endDate).toDateString();
+    return startDate === dateString || endDate === dateString;
+  });
 };
 
 const filteredBookings = computed(() => {
@@ -79,6 +101,15 @@ const attr = ref([
 const handleDateSelect = (day) => {
   selectedDate.value = day.date;
   // Fetch and display booking information for the selected date here
+};
+
+//Autocomplete logic
+const selectedStation = ref(null);
+
+const onStationSelected = (station) => {
+  selectedStation.value = station;
+  // Fetch bookings for the selected station
+  fetchBookingsForStation(station.id);
 };
 </script>
 
