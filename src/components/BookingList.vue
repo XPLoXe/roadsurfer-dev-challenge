@@ -6,7 +6,7 @@
         :key="booking.id"
         class="hover:text-blue-800 hover:underline"
       >
-        <RouterLink :to="`/booking/${booking.id}`">
+        <RouterLink :to="getBookingDetailLink(booking)">
           {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
           {{ formatDate(booking.endDate) }}
         </RouterLink>
@@ -16,15 +16,19 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
   filteredBookings: Array,
-  selectedDate: Date,
 });
 
 const formatDate = (selectedDate) => {
   const date = new Date(selectedDate);
   return date.toLocaleDateString(); // Adjust the format as needed
+};
+
+const getBookingDetailLink = (booking) => {
+  const bookingParam = encodeURIComponent(JSON.stringify(booking));
+  return `/booking/${booking.id}?data=${bookingParam}`;
 };
 </script>
