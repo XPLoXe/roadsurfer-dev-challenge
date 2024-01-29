@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="filteredBookings.length > 0">
+    <div>
       <ul>
         <li v-for="booking in filteredBookings" :key="booking.id">
           <RouterLink :to="`/booking/${booking.id}`">
@@ -10,7 +10,6 @@
         </li>
       </ul>
     </div>
-    <div v-else>No bookings for this date</div>
   </div>
 </template>
 

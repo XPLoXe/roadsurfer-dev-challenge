@@ -11,7 +11,10 @@
         @dayclick="handleDateSelect"
       >
         <template #day-popover="{ day }">
-          <div class="text-xs font-bold text-gray-900">
+          <div
+            class="text-xs font-bold text-gray-900"
+            v-if="day.date === selectedDate"
+          >
             <p>Bookings: {{ getBookingsForDay(day.date).length }}</p>
             <BookingList
               :filteredBookings="filteredBookings"
@@ -47,8 +50,22 @@ const fetchBookingsForStation = async (stationId) => {
     const endDates = bookings.value.map((booking) => new Date(booking.endDate));
 
     attr.value = [
-      { dot: "blue", dates: startDates, popover: true }, // Attribute for start dates
-      { dot: "red", dates: endDates, popover: true }, // Attribute for end dates
+      {
+        dot: "blue",
+        dates: startDates,
+        popover: {
+          label: "start dates",
+          visibility: "click",
+        },
+      }, // Attribute for start dates
+      {
+        dot: "red",
+        dates: endDates,
+        popover: {
+          label: "end dates",
+          visibility: "click",
+        },
+      }, // Attribute for end dates
     ];
   } catch (error) {
     console.error("Error fetching bookings:", error);
@@ -82,7 +99,6 @@ const selectedDate = ref(new Date());
 const attr = ref([
   {
     dates: new Date(),
-    popover: true,
   },
 ]);
 
