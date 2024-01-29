@@ -1,10 +1,18 @@
-<script setup></script>
-
 <template>
   <div>
-    <h1 class="text-3xl text-red-600">Hello</h1>
-    <RouterLink to="/booking">This is a link for testing</RouterLink>
+    <h1>Bookings</h1>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
+
+<script setup>
+import { useRoute } from "vue-router";
+import BookingDetail from "./components/BookingDetail.vue";
+import CalendarView from "./components/CalendarView.vue";
+</script>
 
 <style scoped></style>
