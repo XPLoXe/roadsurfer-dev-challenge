@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <div>
-      <ul>
-        <li v-for="booking in filteredBookings" :key="booking.id">
-          <RouterLink :to="`/booking/${booking.id}`">
-            {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
-            {{ formatDate(booking.endDate) }}
-          </RouterLink>
-        </li>
-      </ul>
-    </div>
+  <div class="p-6">
+    <ul class="flex flex-col space-y-3">
+      <li
+        v-for="booking in filteredBookings"
+        :key="booking.id"
+        class="hover:text-blue-800 hover:underline"
+      >
+        <RouterLink :to="`/booking/${booking.id}`">
+          {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
+          {{ formatDate(booking.endDate) }}
+        </RouterLink>
+      </li>
+    </ul>
   </div>
 </template>
 
