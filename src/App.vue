@@ -2,7 +2,8 @@
 
 <template>
   <div>
-    <h1 class="text-red-600 text-3xl">Hello</h1>
+    <h1 class="text-3xl text-red-600">Hello</h1>
+    <RouterLink to="/booking">This is a link for testing</RouterLink>
   </div>
 </template>
 
