@@ -6,7 +6,7 @@
     <div
       class="flex flex-col items-center p-6 space-y-4 bg-white rounded-xl min-w-[400px] shadow-2xl"
     >
-      <h3 class="text-2xl">Displaying {{ station.name }} Station</h3>
+      <h3 class="text-2xl">Displaying {{ selectedStation.name }} Station</h3>
 
       <Autocomplete @station-selected="onStationSelected" />
     </div>
@@ -53,7 +53,7 @@ import Autocomplete from "./Autocomplete.vue";
 
 //State for storing booking data
 const bookings = ref([]);
-const station = ref({});
+const selectedStation = ref({});
 
 // Function to fetch bookings for a specific station
 const fetchBookingsForStation = async (stationId) => {
@@ -61,8 +61,8 @@ const fetchBookingsForStation = async (stationId) => {
     const response = await axios.get(
       `https://605c94c36d85de00170da8b4.mockapi.io/stations/${stationId}`
     );
-    station.value = response.data;
-    bookings.value = station.value.bookings;
+    selectedStation.value = response.data;
+    bookings.value = response.data.bookings;
 
     // Create calendar attributes for start and end dates
     const startDates = bookings.value.map(
@@ -124,10 +124,8 @@ const handleDateSelect = (day) => {
 };
 
 //Autocomplete logic
-const selectedStation = ref(null);
 
 const onStationSelected = (station) => {
-  console.log("Station selected:", station);
   selectedStation.value = station;
   // Fetch bookings for the selected station
   fetchBookingsForStation(station.id);
