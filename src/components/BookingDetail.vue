@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex flex-col items-center justify-center min-h-screen mx-auto space-y-4 rounded-xl"
+    class="flex flex-col items-center justify-center min-h-screen mx-auto space-y-4 lg:flex-row lg:space-y-0 lg:space-x-6 rounded-xl"
     id="booking-detail"
   >
     <div class="flex flex-col p-6 bg-white shadow-xl rounded-xl">
