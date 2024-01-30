@@ -1,14 +1,16 @@
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen space-y-6">
-    <div class="items-center px-6 py-2 bg-cyan-200 rounded-xl">
+    <div class="items-center px-6 py-2 bg-cyan-500 rounded-xl">
       <Autocomplete @station-selected="onStationSelected" />
     </div>
     <div class="shadow-2xl">
       <VCalendar
+        expanded
         :initial-page="{ month: 3, year: 2021 }"
         :attributes="attr"
         v-model="selectedDate"
         @dayclick="handleDateSelect"
+        :view="view"
       >
         <template #day-popover="{ day }">
           <div
@@ -23,6 +25,11 @@
           </div>
         </template>
       </VCalendar>
+    </div>
+    <div>
+      <button class="button" @click="changeView">
+        {{ view === "monthly" ? "Weekly View" : "Monthly View" }}
+      </button>
     </div>
   </div>
 </template>
@@ -110,6 +117,13 @@ const onStationSelected = (station) => {
   selectedStation.value = station;
   // Fetch bookings for the selected station
   fetchBookingsForStation(station.id);
+};
+
+//Monthly & Weekly View
+const view = ref("monthly");
+
+const changeView = () => {
+  view.value = view.value === "monthly" ? "weekly" : "monthly";
 };
 </script>
 
