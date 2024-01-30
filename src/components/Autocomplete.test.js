@@ -8,7 +8,12 @@ vi.mock("axios");
 describe("Autocomplete", () => {
   // Test render
   it("renders correctly", () => {
-    const wrapper = mount(Autocomplete);
+    const wrapper = mount(Autocomplete, {
+      props: {
+        apiUrl: "https://605c94c36d85de00170da8b4.mockapi.io/stations",
+        placeholderText: "Search stations...",
+      },
+    });
     expect(wrapper.html()).toContain("Search stations...");
   });
 
@@ -23,7 +28,11 @@ describe("Autocomplete", () => {
 
     axios.get.mockResolvedValue(response);
 
-    const wrapper = mount(Autocomplete);
+    const wrapper = mount(Autocomplete, {
+      props: {
+        apiUrl: "https://605c94c36d85de00170da8b4.mockapi.io/stations",
+      },
+    });
     const input = wrapper.find("input");
 
     await input.setValue("Ber");
@@ -35,22 +44,26 @@ describe("Autocomplete", () => {
   });
 
   // Test station-selected event
-  it("emits station-selected event when a suggestion is clicked", async () => {
+  it("emits selection event when a suggestion is clicked", async () => {
     const response = {
       data: [{ id: "1", name: "Berlin" }],
     };
 
     axios.get.mockResolvedValue(response);
 
-    const wrapper = mount(Autocomplete);
+    const wrapper = mount(Autocomplete, {
+      props: {
+        apiUrl: "https://605c94c36d85de00170da8b4.mockapi.io/stations",
+      },
+    });
     await wrapper.find("input").setValue("Ber");
     await wrapper.vm.$nextTick();
 
     const suggestion = wrapper.find("li");
     await suggestion.trigger("click");
 
-    expect(wrapper.emitted("station-selected")).toBeTruthy();
-    expect(wrapper.emitted("station-selected")[0][0]).toEqual({
+    expect(wrapper.emitted("selection")).toBeTruthy();
+    expect(wrapper.emitted("selection")[0][0]).toEqual({
       id: "1",
       name: "Berlin",
     });
