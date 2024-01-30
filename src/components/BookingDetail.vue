@@ -11,6 +11,37 @@
       <p>End Date: {{ formatDate(booking.endDate) }}</p>
     </div>
     <RouterLink to="/" class="button">Back to Calendar</RouterLink>
+
+    <!--Form for editing booking dates-->
+    <div
+      class="flex flex-col items-center justify-center space-y-4"
+      v-show="isEditMode"
+    >
+      <div>
+        <h2 class="text-2xl">Edit Booking</h2>
+      </div>
+      <div>
+        <label for="startDate">Start Date</label>
+        <input
+          type="date"
+          id="startDate"
+          v-model="booking.startDate"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none"
+        />
+      </div>
+      <div>
+        <label for="endDate">End Date</label>
+        <input
+          type="date"
+          id="endDate"
+          v-model="booking.endDate"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none"
+        />
+      </div>
+      <div>
+        <button class="button" @click="saveBooking">Save</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,13 +51,15 @@ import { ref, watch } from "vue";
 
 const route = useRoute();
 const booking = ref({});
+const isEditMode = ref(false);
 
 watch(
-  () => route.query.data,
-  (newData) => {
-    if (newData) {
-      booking.value = JSON.parse(decodeURIComponent(newData));
+  () => route.query,
+  (query) => {
+    if (query.data) {
+      booking.value = JSON.parse(decodeURIComponent(query.data));
     }
+    isEditMode.value = query.edit === "true";
   },
   { immediate: true }
 );
