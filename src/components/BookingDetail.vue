@@ -1,17 +1,14 @@
 <template>
   <section
-    class="flex flex-col items-center justify-center min-h-screen space-y-4"
+    class="flex flex-col items-center justify-center min-h-screen mx-auto space-y-4 rounded-xl"
     id="booking-detail"
   >
-    <div>
-      <h2 class="text-3xl text-red-600 shadow-lg">
-        This is the Booking Detail View
-      </h2>
-    </div>
-    <div>
+    <div class="flex flex-col p-6 bg-white shadow-xl rounded-xl">
       <h2 class="text-2xl">Information for {{ booking.customerName }}</h2>
       <p>Start Date: {{ formatDate(booking.startDate) }}</p>
       <p>End Date: {{ formatDate(booking.endDate) }}</p>
+      <p>Duration: {{ duration }} days</p>
+      <p>Pickup Station: {{ pickupStation.name }}</p>
     </div>
     <RouterLink to="/" class="button">Back to Calendar</RouterLink>
 
@@ -128,6 +125,34 @@ const formattedEndDate = computed({
     booking.value.endDate = val;
   },
 });
+
+//Duration logic
+
+const duration = computed(() => {
+  const startDate = new Date(booking.value.startDate);
+  const endDate = new Date(booking.value.endDate);
+  const timeDifference = endDate.getTime() - startDate.getTime();
+  const daysDifference = Math.trunc(timeDifference / (1000 * 3600 * 24));
+  return daysDifference;
+});
+
+// Pick up station logic
+
+const pickupStation = ref({});
+
+//the pickup station is passed as a parameter
+watch(
+  () => route.query,
+  (query) => {
+    if (query.stationName) {
+      pickupStation.value = {
+        name: JSON.parse(decodeURIComponent(query.stationName)),
+        id: JSON.parse(decodeURIComponent(query.stationId)),
+      };
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped></style>

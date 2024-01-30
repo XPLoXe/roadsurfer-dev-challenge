@@ -48,6 +48,7 @@ import { useRouter } from "vue-router";
 
 const props = defineProps({
   filteredBookings: Array,
+  selectedStation: Object,
 });
 
 const formatDate = (selectedDate) => {
@@ -58,7 +59,13 @@ const formatDate = (selectedDate) => {
 const getBookingDetailLink = (booking) => {
   const bookingParam = encodeURIComponent(JSON.stringify(booking));
   const editParam = isDragging.value ? "edit=true" : "edit=false";
-  return `/booking/${booking.id}?data=${bookingParam}&${editParam}`;
+  const stationName = encodeURIComponent(
+    JSON.stringify(props.selectedStation.name)
+  );
+  const stationId = encodeURIComponent(
+    JSON.stringify(props.selectedStation.id)
+  );
+  return `/booking/${booking.id}?data=${bookingParam}&${editParam}&stationName=${stationName}&stationId=${stationId}`;
 };
 
 //Drag logic

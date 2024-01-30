@@ -31,7 +31,7 @@
 
             <BookingList
               :filteredBookings="filteredBookings"
-              :selectedDate="selectedDate"
+              :selectedStation="selectedStation"
             />
           </div>
         </template>
@@ -105,7 +105,7 @@ const filteredBookings = computed(() => {
   });
 });
 
-// Example: Fetch bookings for station with ID 1 on component mount
+// Default: Fetch bookings for station with ID 1 on component mount
 onMounted(() => {
   fetchBookingsForStation(1);
 });
@@ -127,6 +127,7 @@ const handleDateSelect = (day) => {
 const selectedStation = ref(null);
 
 const onStationSelected = (station) => {
+  console.log("Station selected:", station);
   selectedStation.value = station;
   // Fetch bookings for the selected station
   fetchBookingsForStation(station.id);
