@@ -1,12 +1,12 @@
 <template>
   <section
-    class="flex flex-col items-center justify-center min-h-screen space-y-6 lg:space-y-0 lg:space-x-6 lg:flex-row"
+    class="flex flex-col items-center justify-center min-h-screen space-y-6"
     id="calendar-view"
   >
     <div
-      class="flex flex-col items-center p-6 space-y-4 bg-white rounded-xl min-w-[400px] shadow-2xl"
+      class="flex flex-col items-center p-6 space-y-4 bg-white rounded-xl min-w-[400px] shadow-2xl hover:-translate-y-1 transition-all duration-500"
     >
-      <h3 class="text-2xl">Displaying {{ selectedStation.name }} Station</h3>
+      <h3 class="text-2xl font-bold">{{ selectedStation.name }} Station</h3>
 
       <Autocomplete
         api-url="https://605c94c36d85de00170da8b4.mockapi.io/stations"
@@ -15,7 +15,7 @@
       />
     </div>
     <div
-      class="flex flex-col items-center justify-center p-3 bg-white shadow-2xl min-w-96 rounded-xl"
+      class="flex flex-col items-center justify-center p-3 transition-all duration-500 bg-white shadow-2xl min-w-96 rounded-xl hover:-translate-y-1"
     >
       <VCalendar
         expanded
