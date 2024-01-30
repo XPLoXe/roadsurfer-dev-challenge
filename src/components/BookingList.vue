@@ -1,22 +1,23 @@
 <template>
-  <div class="p-6">
-    <ul class="flex flex-col space-y-3">
+  <div class="p-4">
+    <ul class="flex flex-col space-y-2">
       <li
         v-for="booking in filteredBookings"
         :key="booking.id"
-        class="flex flex-row items-center space-x-2 hover:text-blue-800 hover:underline"
+        class="hover:text-blue-800 hover:underline"
         :draggable="true"
         @dragstart="handleDragStart(index, booking)"
         @dragover.prevent
       >
-        <RouterLink :to="getBookingDetailLink(booking)">
-          <div class="flex flex-row items-center justify-between space-x-4">
-            <p class="text-sm font-bold">{{ booking.customerName }}</p>
-            <p>
-              {{ formatDate(booking.startDate) }} to
-              {{ formatDate(booking.endDate) }}
-            </p>
-          </div>
+        <RouterLink
+          :to="getBookingDetailLink(booking)"
+          class="flex flex-row items-center justify-between p-1 space-x-4"
+        >
+          <p class="text-sm">{{ booking.customerName }}</p>
+          <p class="text-xs">
+            {{ formatDate(booking.startDate) }} to
+            {{ formatDate(booking.endDate) }}
+          </p>
         </RouterLink>
       </li>
     </ul>
