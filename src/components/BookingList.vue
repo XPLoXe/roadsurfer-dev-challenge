@@ -51,7 +51,8 @@ const formatDate = (selectedDate) => {
 
 const getBookingDetailLink = (booking) => {
   const bookingParam = encodeURIComponent(JSON.stringify(booking));
-  return `/booking/${booking.id}?data=${bookingParam}`;
+  const editParam = isDragging.value ? "edit=true" : "edit=false";
+  return `/booking/${booking.id}?data=${bookingParam}&${editParam}`;
 };
 
 //Drag logic
