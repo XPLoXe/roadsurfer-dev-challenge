@@ -5,7 +5,7 @@
       v-model="searchTerm"
       @input="onSearch"
       placeholder="Search stations..."
-      class=""
+      class="w-full px-10 py-3 rounded-full focus:outline-none"
     />
     <ul v-if="showSuggestions && suggestions.length" class="cursor-pointer">
       <li
