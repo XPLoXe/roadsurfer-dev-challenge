@@ -3,15 +3,17 @@
     class="flex flex-col items-center justify-center min-h-screen mx-auto space-y-4 lg:flex-row lg:space-y-0 lg:space-x-6 rounded-xl"
     id="booking-detail"
   >
-    <div class="flex flex-col p-6 bg-white shadow-xl rounded-xl">
-      <h2 class="text-2xl">Information for {{ booking.customerName }}</h2>
-      <p>Start Date: {{ formatDate(booking.startDate) }}</p>
-      <p>End Date: {{ formatDate(booking.endDate) }}</p>
-      <p>Duration: {{ duration }} days</p>
-      <p>Pickup Station: {{ pickupStation.name }}</p>
-      <RouterLink to="/" class="self-center w-40 mt-8 button"
-        >Back to Calendar</RouterLink
-      >
+    <div class="flex flex-col p-6 space-y-3 bg-white shadow-xl rounded-xl">
+      <h2 class="mb-4 text-2xl font-bold">
+        Information for {{ booking.customerName }}
+      </h2>
+      <p><b>Start Date:</b> {{ formatDate(booking.startDate) }}</p>
+      <p><b>End Date:</b> {{ formatDate(booking.endDate) }}</p>
+      <p><b>Duration:</b> {{ duration }} days</p>
+      <p><b>Pickup Station:</b> {{ pickupStation.name }}</p>
+      <RouterLink to="/" class="self-center w-40 button">
+        Back to Calendar
+      </RouterLink>
     </div>
 
     <!--Form for editing booking dates-->

@@ -8,7 +8,11 @@
     >
       <h3 class="text-2xl">Displaying {{ selectedStation.name }} Station</h3>
 
-      <Autocomplete @station-selected="onStationSelected" />
+      <Autocomplete
+        api-url="https://605c94c36d85de00170da8b4.mockapi.io/stations"
+        placeholder-text="Search for a station"
+        @selection="onStationSelected"
+      />
     </div>
     <div
       class="flex flex-col items-center justify-center p-3 bg-white shadow-2xl min-w-96 rounded-xl"
