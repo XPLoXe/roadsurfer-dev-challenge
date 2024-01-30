@@ -2,7 +2,11 @@
 export default {
   content: ["./src/**/*.{html,js,vue}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Bai Jamjuree", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
