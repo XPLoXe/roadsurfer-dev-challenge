@@ -10,8 +10,13 @@
         @dragover.prevent
       >
         <RouterLink :to="getBookingDetailLink(booking)">
-          {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
-          {{ formatDate(booking.endDate) }}
+          <div class="flex flex-row items-center justify-between space-x-4">
+            <p class="text-sm font-bold">{{ booking.customerName }}</p>
+            <p>
+              {{ formatDate(booking.startDate) }} to
+              {{ formatDate(booking.endDate) }}
+            </p>
+          </div>
         </RouterLink>
       </li>
     </ul>

@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen space-y-6">
+    <div>
+      <h3 class="text-2xl">Displaying {{ station.name }} Station</h3>
+    </div>
     <div class="items-center px-6 py-2 bg-cyan-500 rounded-xl">
       <Autocomplete @station-selected="onStationSelected" />
     </div>
@@ -17,7 +20,11 @@
             class="text-xs font-bold text-gray-900"
             v-if="day.date === selectedDate"
           >
-            <p>Bookings: {{ getBookingsForDay(day.date).length }}</p>
+            <div class="flex flex-row items-center justify-between">
+              <p>Bookings: {{ getBookingsForDay(day.date).length }}</p>
+              <p class="text-slate-400">Drag to edit/delete</p>
+            </div>
+
             <BookingList
               :filteredBookings="filteredBookings"
               :selectedDate="selectedDate"
@@ -42,6 +49,7 @@ import Autocomplete from "./Autocomplete.vue";
 
 //State for storing booking data
 const bookings = ref([]);
+const station = ref({});
 
 // Function to fetch bookings for a specific station
 const fetchBookingsForStation = async (stationId) => {
@@ -49,7 +57,8 @@ const fetchBookingsForStation = async (stationId) => {
     const response = await axios.get(
       `https://605c94c36d85de00170da8b4.mockapi.io/stations/${stationId}`
     );
-    bookings.value = response.data.bookings;
+    station.value = response.data;
+    bookings.value = station.value.bookings;
 
     // Create calendar attributes for start and end dates
     const startDates = bookings.value.map(
