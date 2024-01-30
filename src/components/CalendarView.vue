@@ -10,7 +10,9 @@
 
       <Autocomplete @station-selected="onStationSelected" />
     </div>
-    <div class="shadow-2xl">
+    <div
+      class="flex flex-col items-center justify-center p-3 bg-white shadow-2xl min-w-96 rounded-xl"
+    >
       <VCalendar
         expanded
         :initial-page="{ month: 3, year: 2021 }"
@@ -18,6 +20,7 @@
         v-model="selectedDate"
         @dayclick="handleDateSelect"
         :view="view"
+        class="mt-3 mb-3 border-0"
       >
         <template #day-popover="{ day }">
           <div
@@ -36,11 +39,11 @@
           </div>
         </template>
       </VCalendar>
-    </div>
-    <div>
-      <button class="button" @click="changeView">
-        {{ view === "monthly" ? "Weekly View" : "Monthly View" }}
-      </button>
+      <div class="mb-3">
+        <button class="button" @click="changeView">
+          {{ view === "monthly" ? "Weekly View" : "Monthly View" }}
+        </button>
+      </div>
     </div>
   </section>
 </template>

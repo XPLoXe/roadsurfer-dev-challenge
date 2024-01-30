@@ -4,7 +4,7 @@
       <li
         v-for="booking in filteredBookings"
         :key="booking.id"
-        class="hover:text-blue-800 hover:underline"
+        class="transition-all duration-300 hover:text-orange-700 hover:scale-105"
         :draggable="true"
         @dragstart="handleDragStart(index, booking)"
         @dragover.prevent
@@ -21,24 +21,26 @@
         </RouterLink>
       </li>
     </ul>
-    <div class="flex flex-row justify-center mt-4" v-show="isDragging">
-      <img
-        src="../images/fa-pen.svg"
-        alt=""
-        class="w-8 h-8 p-2 rounded-full ficon"
-        :class="{ 'drag-hover': draggingOverEdit }"
-        @dragover.prevent
-        @dragenter="draggingOverEdit = true"
-        @dragleave="draggingOverEdit = false"
-        @drop="handleEditDrop"
-      />
-      <img
-        src="../images/fa-trash.svg"
-        alt=""
-        class="w-8 h-8 p-2 rounded-full ficon"
-        @click="deleteBooking(draggedItem.booking)"
-      />
-    </div>
+    <transition name="fade">
+      <div class="flex flex-row justify-center mt-4" v-show="isDragging">
+        <img
+          src="../images/fa-pen.svg"
+          alt=""
+          class="w-8 h-8 p-2 rounded-full ficon"
+          :class="{ 'drag-hover': draggingOverEdit }"
+          @dragover.prevent
+          @dragenter="draggingOverEdit = true"
+          @dragleave="draggingOverEdit = false"
+          @drop="handleEditDrop"
+        />
+        <img
+          src="../images/fa-trash.svg"
+          alt=""
+          class="w-8 h-8 p-2 rounded-full ficon"
+          @click="deleteBooking(draggedItem.booking)"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -108,3 +110,15 @@ const editBooking = (booking) => {
   console.log(`Editing booking ${booking.id}`);
 };
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
