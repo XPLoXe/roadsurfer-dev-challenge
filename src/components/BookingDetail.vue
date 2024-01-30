@@ -61,7 +61,7 @@ const isEditMode = ref(false);
 
 const isSavingSuccess = ref(false);
 
-const saveBooking = () => {
+const saveBooking = async () => {
   // Compare the start date and end date to make sure the end date is after the start date
   if (booking.value.startDate > booking.value.endDate) {
     alert("End date must be after start date");
@@ -69,15 +69,20 @@ const saveBooking = () => {
   } else {
     // If the dates are valid, save the booking
     // Simulated API call
-    const apiCall = `PUT /api/bookings/${
-      booking.value.id
-    } with data: ${JSON.stringify({
-      startDate: booking.value.startDate,
-      endDate: booking.value.endDate,
-    })}`;
-
-    // Output the simulated API call to the console
-    console.log("Simulated API Call:", apiCall);
+    try {
+      const apiCall = `PUT /api/bookings/${
+        booking.value.id
+      } with data: ${JSON.stringify({
+        startDate: booking.value.startDate,
+        endDate: booking.value.endDate,
+      })}`;
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API response time
+      // Output the simulated API call to the console
+      console.log("Simulated API Call:", apiCall);
+    } catch (error) {
+      console.error("Error saving booking:", error);
+      isSavingSuccess.value = false;
+    }
 
     isSavingSuccess.value = true;
   }
