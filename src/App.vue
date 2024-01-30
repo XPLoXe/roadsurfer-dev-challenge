@@ -1,11 +1,13 @@
 <template>
-  <div class="bg-slate-300">
+  <body
+    class="bg-no-repeat bg-cover bg-main-background md:bg-desktop-background"
+  >
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
-  </div>
+  </body>
 </template>
 
 <script setup>

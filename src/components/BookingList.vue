@@ -1,17 +1,23 @@
 <template>
-  <div class="p-6">
-    <ul class="flex flex-col space-y-3">
+  <div class="p-4">
+    <ul class="flex flex-col space-y-2">
       <li
         v-for="booking in filteredBookings"
         :key="booking.id"
-        class="flex flex-row items-center space-x-2 hover:text-blue-800 hover:underline"
+        class="hover:text-blue-800 hover:underline"
         :draggable="true"
         @dragstart="handleDragStart(index, booking)"
         @dragover.prevent
       >
-        <RouterLink :to="getBookingDetailLink(booking)">
-          {{ booking.customerName }} - {{ formatDate(booking.startDate) }} to
-          {{ formatDate(booking.endDate) }}
+        <RouterLink
+          :to="getBookingDetailLink(booking)"
+          class="flex flex-row items-center justify-between p-1 space-x-4"
+        >
+          <p class="text-sm">{{ booking.customerName }}</p>
+          <p class="text-xs">
+            {{ formatDate(booking.startDate) }} to
+            {{ formatDate(booking.endDate) }}
+          </p>
         </RouterLink>
       </li>
     </ul>
@@ -42,6 +48,7 @@ import { useRouter } from "vue-router";
 
 const props = defineProps({
   filteredBookings: Array,
+  selectedStation: Object,
 });
 
 const formatDate = (selectedDate) => {
@@ -52,7 +59,13 @@ const formatDate = (selectedDate) => {
 const getBookingDetailLink = (booking) => {
   const bookingParam = encodeURIComponent(JSON.stringify(booking));
   const editParam = isDragging.value ? "edit=true" : "edit=false";
-  return `/booking/${booking.id}?data=${bookingParam}&${editParam}`;
+  const stationName = encodeURIComponent(
+    JSON.stringify(props.selectedStation.name)
+  );
+  const stationId = encodeURIComponent(
+    JSON.stringify(props.selectedStation.id)
+  );
+  return `/booking/${booking.id}?data=${bookingParam}&${editParam}&stationName=${stationName}&stationId=${stationId}`;
 };
 
 //Drag logic

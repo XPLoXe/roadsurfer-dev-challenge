@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen space-y-4">
-    <div>
-      <h2 class="text-3xl text-red-600 shadow-lg">
-        This is the Booking Detail View
-      </h2>
-    </div>
-    <div>
+  <section
+    class="flex flex-col items-center justify-center min-h-screen mx-auto space-y-4 rounded-xl"
+    id="booking-detail"
+  >
+    <div class="flex flex-col p-6 bg-white shadow-xl rounded-xl">
       <h2 class="text-2xl">Information for {{ booking.customerName }}</h2>
       <p>Start Date: {{ formatDate(booking.startDate) }}</p>
       <p>End Date: {{ formatDate(booking.endDate) }}</p>
+      <p>Duration: {{ duration }} days</p>
+      <p>Pickup Station: {{ pickupStation.name }}</p>
     </div>
     <RouterLink to="/" class="button">Back to Calendar</RouterLink>
 
@@ -46,7 +46,7 @@
         <button class="button" type="submit" @click="saveBooking">Save</button>
       </div>
     </form>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -61,7 +61,7 @@ const isEditMode = ref(false);
 
 const isSavingSuccess = ref(false);
 
-const saveBooking = () => {
+const saveBooking = async () => {
   // Compare the start date and end date to make sure the end date is after the start date
   if (booking.value.startDate > booking.value.endDate) {
     alert("End date must be after start date");
@@ -69,15 +69,20 @@ const saveBooking = () => {
   } else {
     // If the dates are valid, save the booking
     // Simulated API call
-    const apiCall = `PUT /api/bookings/${
-      booking.value.id
-    } with data: ${JSON.stringify({
-      startDate: booking.value.startDate,
-      endDate: booking.value.endDate,
-    })}`;
-
-    // Output the simulated API call to the console
-    console.log("Simulated API Call:", apiCall);
+    try {
+      const apiCall = `PUT /api/bookings/${
+        booking.value.id
+      } with data: ${JSON.stringify({
+        startDate: booking.value.startDate,
+        endDate: booking.value.endDate,
+      })}`;
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API response time
+      // Output the simulated API call to the console
+      console.log("Simulated API Call:", apiCall);
+    } catch (error) {
+      console.error("Error saving booking:", error);
+      isSavingSuccess.value = false;
+    }
 
     isSavingSuccess.value = true;
   }
@@ -120,6 +125,34 @@ const formattedEndDate = computed({
     booking.value.endDate = val;
   },
 });
+
+//Duration logic
+
+const duration = computed(() => {
+  const startDate = new Date(booking.value.startDate);
+  const endDate = new Date(booking.value.endDate);
+  const timeDifference = endDate.getTime() - startDate.getTime();
+  const daysDifference = Math.trunc(timeDifference / (1000 * 3600 * 24));
+  return daysDifference;
+});
+
+// Pick up station logic
+
+const pickupStation = ref({});
+
+//the pickup station is passed as a parameter
+watch(
+  () => route.query,
+  (query) => {
+    if (query.stationName) {
+      pickupStation.value = {
+        name: JSON.parse(decodeURIComponent(query.stationName)),
+        id: JSON.parse(decodeURIComponent(query.stationId)),
+      };
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped></style>
