@@ -25,7 +25,7 @@
         <input
           type="date"
           id="startDate"
-          v-model="booking.startDate"
+          v-model="formattedStartDate"
           class="w-full px-4 py-2 border rounded-lg focus:outline-none"
         />
       </div>
@@ -34,7 +34,7 @@
         <input
           type="date"
           id="endDate"
-          v-model="booking.endDate"
+          v-model="formattedEndDate"
           class="w-full px-4 py-2 border rounded-lg focus:outline-none"
         />
       </div>
@@ -47,7 +47,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 const route = useRoute();
 const booking = ref({});
@@ -64,10 +64,30 @@ watch(
   { immediate: true }
 );
 
+//Format dates
+
 const formatDate = (selectedDate) => {
   const date = new Date(selectedDate);
   return date.toLocaleDateString();
 };
+
+const formatDateForInput = (dateString) => {
+  return dateString ? new Date(dateString).toISOString().split("T")[0] : "";
+};
+
+const formattedStartDate = computed({
+  get: () => formatDateForInput(booking.value.startDate),
+  set: (val) => {
+    booking.value.startDate = val;
+  },
+});
+
+const formattedEndDate = computed({
+  get: () => formatDateForInput(booking.value.endDate),
+  set: (val) => {
+    booking.value.endDate = val;
+  },
+});
 </script>
 
 <style lang="scss" scoped></style>
