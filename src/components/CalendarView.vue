@@ -35,6 +35,7 @@
             <BookingList
               :filteredBookings="filteredBookings"
               :selectedStation="selectedStation"
+              @booking-deleted="updateCalendar"
             />
           </div>
         </template>
@@ -90,6 +91,31 @@ const fetchBookingsForStation = async (stationId) => {
   }
 };
 
+//update calendar after booking is deleted
+const updateCalendar = (deletedBooking) => {
+  console.log("Deleted booking:", deletedBooking);
+  bookings.value = bookings.value.filter(
+    (booking) => booking.id !== deletedBooking.id
+  );
+  const startDates = bookings.value.map(
+    (booking) => new Date(booking.startDate)
+  );
+  const endDates = bookings.value.map((booking) => new Date(booking.endDate));
+
+  attr.value = [
+    {
+      dot: "blue",
+      dates: startDates,
+      popover: true,
+    }, // Attribute for start dates
+    {
+      dot: "red",
+      dates: endDates,
+      popover: true,
+    }, // Attribute for end dates
+  ];
+};
+
 const getBookingsForDay = (date) => {
   const dateString = date.toDateString();
   return bookings.value.filter((booking) => {
@@ -110,6 +136,7 @@ const filteredBookings = computed(() => {
 
 // Default: Fetch bookings for station with ID 1 on component mount
 onMounted(() => {
+  console.log("Mounted");
   fetchBookingsForStation(1);
 });
 

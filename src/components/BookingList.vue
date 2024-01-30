@@ -2,7 +2,7 @@
   <div class="p-4">
     <ul class="flex flex-col space-y-2">
       <li
-        v-for="booking in filteredBookings"
+        v-for="booking in props.filteredBookings"
         :key="booking.id"
         class="transition-all duration-300 hover:text-orange-700 hover:scale-105"
         :draggable="true"
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted, onUnmounted } from "vue";
+import { defineProps, ref, onMounted, onUnmounted, defineEmits } from "vue";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
@@ -117,6 +117,9 @@ onUnmounted(() => {
 });
 
 //Handle edit and delete
+
+const emit = defineEmits(["booking-deleted"]);
+
 const deleteBooking = async (booking) => {
   // Simulate API call for deleting the booking
   const apiCall = `DELETE /api/bookings/${booking.id}`;
@@ -132,6 +135,9 @@ const deleteBooking = async (booking) => {
       props.filteredBookings.findIndex((b) => b.id === booking.id),
       1
     );
+
+    // Emit an event with the deleted booking
+    emit("booking-deleted", booking);
   } catch (error) {
     console.error("Error deleting booking:", error);
   }
