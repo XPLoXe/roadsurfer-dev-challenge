@@ -1,5 +1,5 @@
 <template>
-  <div
+  <body
     class="bg-no-repeat bg-cover bg-main-background md:bg-desktop-background"
   >
     <router-view v-slot="{ Component }">
@@ -7,7 +7,7 @@
         <component :is="Component" />
       </transition>
     </router-view>
-  </div>
+  </body>
 </template>
 
 <script setup>

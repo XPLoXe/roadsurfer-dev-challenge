@@ -3,6 +3,9 @@ export default {
   content: ["./src/**/*.{html,js,vue}"],
   theme: {
     extend: {
+      colors: {
+        grayish: "#243c5a",
+      },
       fontFamily: {
         sans: ["Bai Jamjuree", "sans-serif"],
       },

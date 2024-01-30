@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen space-y-4">
+  <section
+    class="flex flex-col items-center justify-center min-h-screen space-y-4"
+    id="booking-detail"
+  >
     <div>
       <h2 class="text-3xl text-red-600 shadow-lg">
         This is the Booking Detail View
@@ -46,7 +49,7 @@
         <button class="button" type="submit" @click="saveBooking">Save</button>
       </div>
     </form>
-  </div>
+  </section>
 </template>
 
 <script setup>

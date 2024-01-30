@@ -1,9 +1,13 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen space-y-6">
-    <div>
+  <section
+    class="flex flex-col items-center justify-center min-h-screen space-y-6"
+    id="calendar-view"
+  >
+    <div
+      class="flex flex-col items-center p-6 space-y-4 bg-white rounded-xl min-w-[400px] shadow-2xl"
+    >
       <h3 class="text-2xl">Displaying {{ station.name }} Station</h3>
-    </div>
-    <div class="items-center px-6 py-2 bg-cyan-500 rounded-xl">
+
       <Autocomplete @station-selected="onStationSelected" />
     </div>
     <div class="shadow-2xl">
@@ -38,7 +42,7 @@
         {{ view === "monthly" ? "Weekly View" : "Monthly View" }}
       </button>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
