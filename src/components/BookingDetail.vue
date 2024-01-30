@@ -13,12 +13,16 @@
     <RouterLink to="/" class="button">Back to Calendar</RouterLink>
 
     <!--Form for editing booking dates-->
-    <div
+    <form
       class="flex flex-col items-center justify-center space-y-4"
       v-show="isEditMode"
+      @submit.prevent.default
     >
       <div>
         <h2 class="text-2xl">Edit Booking</h2>
+        <!--success message on green-->
+
+        <p v-if="isSavingSuccess" class="text-green-500">Saving successful!</p>
       </div>
       <div>
         <label for="startDate">Start Date</label>
@@ -39,9 +43,9 @@
         />
       </div>
       <div>
-        <button class="button" @click="saveBooking">Save</button>
+        <button class="button" type="submit" @click="saveBooking">Save</button>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -52,6 +56,34 @@ import { ref, watch, computed } from "vue";
 const route = useRoute();
 const booking = ref({});
 const isEditMode = ref(false);
+
+//Form Logic
+
+const isSavingSuccess = ref(false);
+
+const saveBooking = () => {
+  // Compare the start date and end date to make sure the end date is after the start date
+  if (booking.value.startDate > booking.value.endDate) {
+    alert("End date must be after start date");
+    return;
+  } else {
+    // If the dates are valid, save the booking
+    // Simulated API call
+    const apiCall = `PUT /api/bookings/${
+      booking.value.id
+    } with data: ${JSON.stringify({
+      startDate: booking.value.startDate,
+      endDate: booking.value.endDate,
+    })}`;
+
+    // Output the simulated API call to the console
+    console.log("Simulated API Call:", apiCall);
+
+    isSavingSuccess.value = true;
+  }
+};
+
+//Parameters logic
 
 watch(
   () => route.query,
