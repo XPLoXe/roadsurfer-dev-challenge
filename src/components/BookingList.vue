@@ -37,7 +37,11 @@
           src="../images/fa-trash.svg"
           alt=""
           class="w-8 h-8 p-2 rounded-full ficon"
-          @click="deleteBooking(draggedItem.booking)"
+          :class="{ 'drag-hover': draggingOverDelete }"
+          @dragover.prevent
+          @dragenter="draggingOverDelete = true"
+          @dragleave="draggingOverDelete = false"
+          @drop="handleDeleteDrop"
         />
       </div>
     </transition>
@@ -75,6 +79,7 @@ const router = useRouter();
 const isDragging = ref(false);
 const draggedItem = ref(null);
 const draggingOverEdit = ref(false);
+const draggingOverDelete = ref(false);
 
 const handleDragStart = (index, booking) => {
   isDragging.value = true;
@@ -87,6 +92,16 @@ const handleEditDrop = () => {
   }
   isDragging.value = false;
   draggingOverEdit.value = false;
+};
+
+const handleDeleteDrop = async () => {
+  if (draggingOverDelete.value && draggedItem.value) {
+    if (confirm("Are you sure you want to cancel this reservation?")) {
+      await deleteBooking(draggedItem.value);
+    }
+  }
+  isDragging.value = false;
+  draggingOverDelete.value = false;
 };
 
 const resetDragState = () => {
@@ -102,8 +117,24 @@ onUnmounted(() => {
 });
 
 //Handle edit and delete
-const deleteBooking = (booking) => {
-  console.log(`Deleting booking ${booking.id}`);
+const deleteBooking = async (booking) => {
+  // Simulate API call for deleting the booking
+  const apiCall = `DELETE /api/bookings/${booking.id}`;
+
+  try {
+    // Simulating async API call
+    await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API response time
+
+    console.log("Simulated API Call:", apiCall);
+
+    // Remove the booking from the list of bookings
+    props.filteredBookings.splice(
+      props.filteredBookings.findIndex((b) => b.id === booking.id),
+      1
+    );
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+  }
 };
 
 const editBooking = (booking) => {
