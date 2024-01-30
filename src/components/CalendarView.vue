@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex flex-col items-center justify-center min-h-screen space-y-6"
+    class="flex flex-col items-center justify-center min-h-screen space-y-6 lg:space-y-0 lg:space-x-6 lg:flex-row"
     id="calendar-view"
   >
     <div
