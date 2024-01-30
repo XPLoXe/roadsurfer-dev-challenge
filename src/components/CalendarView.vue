@@ -15,7 +15,7 @@
       />
     </div>
     <div
-      class="flex flex-col items-center justify-center p-3 transition-all duration-500 bg-white shadow-2xl min-w-96 rounded-xl hover:-translate-y-1"
+      class="flex flex-col items-center justify-center p-3 bg-white shadow-2xl min-w-96 rounded-xl"
     >
       <VCalendar
         expanded
