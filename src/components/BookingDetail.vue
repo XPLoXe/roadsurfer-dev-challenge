@@ -9,12 +9,14 @@
       <p>End Date: {{ formatDate(booking.endDate) }}</p>
       <p>Duration: {{ duration }} days</p>
       <p>Pickup Station: {{ pickupStation.name }}</p>
+      <RouterLink to="/" class="self-center w-40 mt-8 button"
+        >Back to Calendar</RouterLink
+      >
     </div>
-    <RouterLink to="/" class="button">Back to Calendar</RouterLink>
 
     <!--Form for editing booking dates-->
     <form
-      class="flex flex-col items-center justify-center space-y-4"
+      class="flex flex-col items-center justify-center p-6 space-y-4 bg-white shadow-xl rounded-xl"
       v-show="isEditMode"
       @submit.prevent.default
     >

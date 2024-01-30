@@ -10,7 +10,9 @@
 
       <Autocomplete @station-selected="onStationSelected" />
     </div>
-    <div class="shadow-2xl">
+    <div
+      class="flex flex-col items-center justify-center p-3 bg-white shadow-2xl min-w-96 rounded-xl"
+    >
       <VCalendar
         expanded
         :initial-page="{ month: 3, year: 2021 }"
@@ -18,6 +20,7 @@
         v-model="selectedDate"
         @dayclick="handleDateSelect"
         :view="view"
+        class="mt-3 mb-3 border-0"
       >
         <template #day-popover="{ day }">
           <div
@@ -32,15 +35,16 @@
             <BookingList
               :filteredBookings="filteredBookings"
               :selectedStation="selectedStation"
+              @booking-deleted="updateCalendar"
             />
           </div>
         </template>
       </VCalendar>
-    </div>
-    <div>
-      <button class="button" @click="changeView">
-        {{ view === "monthly" ? "Weekly View" : "Monthly View" }}
-      </button>
+      <div class="mb-3">
+        <button class="button" @click="changeView">
+          {{ view === "monthly" ? "Weekly View" : "Monthly View" }}
+        </button>
+      </div>
     </div>
   </section>
 </template>
@@ -87,6 +91,31 @@ const fetchBookingsForStation = async (stationId) => {
   }
 };
 
+//update calendar after booking is deleted
+const updateCalendar = (deletedBooking) => {
+  console.log("Deleted booking:", deletedBooking);
+  bookings.value = bookings.value.filter(
+    (booking) => booking.id !== deletedBooking.id
+  );
+  const startDates = bookings.value.map(
+    (booking) => new Date(booking.startDate)
+  );
+  const endDates = bookings.value.map((booking) => new Date(booking.endDate));
+
+  attr.value = [
+    {
+      dot: "blue",
+      dates: startDates,
+      popover: true,
+    }, // Attribute for start dates
+    {
+      dot: "red",
+      dates: endDates,
+      popover: true,
+    }, // Attribute for end dates
+  ];
+};
+
 const getBookingsForDay = (date) => {
   const dateString = date.toDateString();
   return bookings.value.filter((booking) => {
@@ -107,6 +136,7 @@ const filteredBookings = computed(() => {
 
 // Default: Fetch bookings for station with ID 1 on component mount
 onMounted(() => {
+  console.log("Mounted");
   fetchBookingsForStation(1);
 });
 
