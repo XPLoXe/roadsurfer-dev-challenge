@@ -6,7 +6,5 @@ import { ghPages } from "vite-plugin-gh-pages";
 export default defineConfig({
   plugins: [vue(), ghPages()],
   base:
-    process.env.NODE_ENV === "production"
-      ? "/<roadsurfer-dev-challenge>/"
-      : "/",
+    process.env.NODE_ENV === "production" ? "/roadsurfer-dev-challenge/" : "/",
 });
