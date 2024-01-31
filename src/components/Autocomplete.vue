@@ -7,18 +7,17 @@
       :placeholder="placeholderText"
       class="w-full px-10 py-3 rounded-full focus:outline-none"
     />
-    <ul
-      v-if="showSuggestions && suggestions.length"
-      class="autocomplete-suggestions"
-    >
+    <ul v-if="showSuggestions" class="autocomplete-suggestions">
       <li
         v-for="suggestion in suggestions"
+        v-if="suggestions.length > 0"
         :key="suggestion.id"
         @click="selectSuggestion(suggestion)"
         class="autocomplete-suggestion"
       >
         {{ suggestion.name }}
       </li>
+      <li v-else class="autocomplete-no-results">No results</li>
     </ul>
   </div>
 </template>
@@ -45,11 +44,6 @@ const onSearch = async () => {
         station.name.toLowerCase().includes(searchTerm.value.toLowerCase())
       );
       showSuggestions.value = true;
-      // const response = await axios.get(
-      //   `https://605c94c36d85de00170da8b4.mockapi.io/stations`
-      // );
-      // suggestions.value = response.data.filter((station) =>
-      //   station.name.toLowerCase().includes(searchTerm.value.toLowerCase())
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -62,6 +56,7 @@ const onSearch = async () => {
 const selectSuggestion = (suggestion) => {
   searchTerm.value = "";
   showSuggestions.value = false;
+  // Emit the selected suggestion to the parent component
   emit("selection", suggestion);
 };
 </script>

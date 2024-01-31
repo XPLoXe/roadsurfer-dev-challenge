@@ -12,9 +12,13 @@
 }
 
 .autocomplete-suggestions {
-  @apply fixed z-20 px-6 py-3 m-2 overflow-auto bg-orange-400 rounded-lg shadow-lg cursor-pointer min-h-10 max-w-36;
+  @apply fixed z-20 px-6 py-3 m-2 overflow-auto bg-orange-500 rounded-lg shadow-lg cursor-pointer min-h-10 max-w-36;
 }
 
 .autocomplete-suggestion {
   @apply px-2 py-1 mx-auto font-bold transition-all duration-300 hover:scale-110 rounded-xl;
+}
+
+.autocomplete-no-results {
+  @apply px-2 py-1 mx-auto font-bold  rounded-xl cursor-not-allowed;
 }

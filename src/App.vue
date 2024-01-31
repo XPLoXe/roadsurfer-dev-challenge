@@ -10,11 +10,7 @@
   </body>
 </template>
 
-<script setup>
-import { useRoute } from "vue-router";
-import BookingDetail from "./components/BookingDetail.vue";
-import CalendarView from "./components/CalendarView.vue";
-</script>
+<script setup></script>
 
 <style scoped>
 .fade-enter-from {
