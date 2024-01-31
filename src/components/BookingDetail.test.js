@@ -32,8 +32,7 @@ describe("BookingDetail", () => {
         plugins: [router],
       },
     });
-    const button = wrapper.find("a"); // Adjust to select your 'Back to Calendar' link or button
+    const button = wrapper.find("a"); // Find the button "Back to Calendar"
     await button.trigger("click");
-    // Check if the navigation occurred (may need additional logic to verify navigation)
   });
 });

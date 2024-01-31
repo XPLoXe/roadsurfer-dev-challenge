@@ -45,11 +45,6 @@ const onSearch = async () => {
         station.name.toLowerCase().includes(searchTerm.value.toLowerCase())
       );
       showSuggestions.value = true;
-      // const response = await axios.get(
-      //   `https://605c94c36d85de00170da8b4.mockapi.io/stations`
-      // );
-      // suggestions.value = response.data.filter((station) =>
-      //   station.name.toLowerCase().includes(searchTerm.value.toLowerCase())
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -62,6 +57,7 @@ const onSearch = async () => {
 const selectSuggestion = (suggestion) => {
   searchTerm.value = "";
   showSuggestions.value = false;
+  // Emit the selected suggestion to the parent component
   emit("selection", suggestion);
 };
 </script>

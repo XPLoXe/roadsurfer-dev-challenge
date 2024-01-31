@@ -142,10 +142,6 @@ const deleteBooking = async (booking) => {
     console.error("Error deleting booking:", error);
   }
 };
-
-const editBooking = (booking) => {
-  console.log(`Editing booking ${booking.id}`);
-};
 </script>
 
 <style scoped>

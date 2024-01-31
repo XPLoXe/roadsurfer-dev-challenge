@@ -172,5 +172,3 @@ const changeView = () => {
   view.value = view.value === "monthly" ? "weekly" : "monthly";
 };
 </script>
-
-<style lang="scss" scoped></style>
