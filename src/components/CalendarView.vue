@@ -4,7 +4,7 @@
     id="calendar-view"
   >
     <div
-      class="flex flex-col items-center p-6 space-y-4 bg-white rounded-xl min-w-[400px] shadow-2xl hover:-translate-y-1 transition-all duration-500"
+      class="flex flex-col items-center p-6 space-y-4 bg-white rounded-xl min-w-[400px] shadow-2xl hover:-translate-y-1 transition-all duration-500 z-20"
     >
       <h3 class="text-2xl font-bold">{{ selectedStation.name }} Station</h3>
 
