@@ -11,7 +11,7 @@
       >
         <RouterLink
           :to="getBookingDetailLink(booking)"
-          class="flex flex-row items-center justify-between p-1 space-x-4"
+          class="flex flex-row items-center justify-between p-1 space-x-4 cursor-grab"
         >
           <p class="text-sm">{{ booking.customerName }}</p>
           <p class="text-xs">
@@ -22,11 +22,11 @@
       </li>
     </ul>
     <transition name="fade">
-      <div class="flex flex-row justify-center mt-4" v-show="isDragging">
+      <div class="flex flex-row justify-around mt-4" v-show="isDragging">
         <img
           src="../images/fa-pen.svg"
           alt=""
-          class="w-8 h-8 p-2 rounded-full ficon"
+          class="w-10 h-10 p-2 rounded-full ficon"
           :class="{ 'drag-hover': draggingOverEdit }"
           @dragover.prevent
           @dragenter="draggingOverEdit = true"
@@ -36,7 +36,7 @@
         <img
           src="../images/fa-trash.svg"
           alt=""
-          class="w-8 h-8 p-2 rounded-full ficon"
+          class="w-10 h-10 p-2 rounded-full ficon"
           :class="{ 'drag-hover': draggingOverDelete }"
           @dragover.prevent
           @dragenter="draggingOverDelete = true"

@@ -3,7 +3,9 @@
     class="flex flex-col items-center justify-center min-h-screen mx-auto space-y-4 lg:flex-row lg:space-y-0 lg:space-x-6 rounded-xl"
     id="booking-detail"
   >
-    <div class="flex flex-col p-6 space-y-3 bg-white shadow-xl rounded-xl">
+    <div
+      class="flex flex-col p-6 space-y-4 transition-all duration-500 bg-white shadow-xl rounded-xl hover:-translate-y-1"
+    >
       <h2 class="mb-4 text-2xl font-bold">
         Information for {{ booking.customerName }}
       </h2>
@@ -18,18 +20,18 @@
 
     <!--Form for editing booking dates-->
     <form
-      class="flex flex-col items-center justify-center p-6 space-y-4 bg-white shadow-xl rounded-xl"
+      class="flex flex-col items-center justify-center p-6 space-y-4 transition-all duration-500 bg-white shadow-xl hover:-translate-y-1 rounded-xl"
       v-show="isEditMode"
       @submit.prevent.default
     >
       <div>
-        <h2 class="text-2xl">Edit Booking</h2>
+        <h2 class="text-2xl font-bold">Edit Booking</h2>
         <!--success message on green-->
 
         <p v-if="isSavingSuccess" class="text-green-500">Saving successful!</p>
       </div>
       <div>
-        <label for="startDate">Start Date</label>
+        <label for="startDate" class="font-bold">Start Date</label>
         <input
           type="date"
           id="startDate"
@@ -38,7 +40,7 @@
         />
       </div>
       <div>
-        <label for="endDate">End Date</label>
+        <label for="endDate" class="font-bold">End Date</label>
         <input
           type="date"
           id="endDate"
@@ -80,7 +82,7 @@ const saveBooking = async () => {
         startDate: booking.value.startDate,
         endDate: booking.value.endDate,
       })}`;
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API response time
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API response time
       // Output the simulated API call to the console
       console.log("Simulated API Call:", apiCall);
     } catch (error) {
