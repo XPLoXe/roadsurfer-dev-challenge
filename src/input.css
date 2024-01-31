@@ -18,3 +18,7 @@
 .autocomplete-suggestion {
   @apply px-2 py-1 mx-auto font-bold transition-all duration-300 hover:scale-110 rounded-xl;
 }
+
+.autocomplete-no-results {
+  @apply px-2 py-1 mx-auto font-bold  rounded-xl cursor-not-allowed;
+}

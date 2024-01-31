@@ -7,18 +7,17 @@
       :placeholder="placeholderText"
       class="w-full px-10 py-3 rounded-full focus:outline-none"
     />
-    <ul
-      v-if="showSuggestions && suggestions.length"
-      class="autocomplete-suggestions"
-    >
+    <ul v-if="showSuggestions" class="autocomplete-suggestions">
       <li
         v-for="suggestion in suggestions"
+        v-if="suggestions.length > 0"
         :key="suggestion.id"
         @click="selectSuggestion(suggestion)"
         class="autocomplete-suggestion"
       >
         {{ suggestion.name }}
       </li>
+      <li v-else class="autocomplete-no-results">No results</li>
     </ul>
   </div>
 </template>
